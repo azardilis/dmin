@@ -1,0 +1,21 @@
+\documentclass[12pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\begin{document}
+
+<<env, echo=FALSE>>=
+set.seed(0)
+library("xtable")
+library("knitr")
+opts_chunk$set(fig.align = 'center',
+               tidy = FALSE)
+@
+
+\title{Scientific Programming Assignment 2}
+\maketitle
+
+
+
+\end{document}
