@@ -100,7 +100,7 @@ calcRealRi <- function(fname="spa2.dat") {
 
 mcmc <- function() {
     sigma <- 5
-    T <- 10
+    T <- 100
     chain <- matrix(rep(0, T*2), ncol=2)
     chain[1, ] <- c(10, 5)
 
@@ -108,7 +108,7 @@ mcmc <- function() {
         print(t)
         ym <- rtruncnorm(1, 0, mean=chain[t-1, 1], sd=sigma)
         ys <- rtruncnorm(1, 0, mean=chain[t-1, 2], sd=sigma)
-        cat(sprintf("%f %f \n", ym, ys))
+        #cat(sprintf("%f %f \n", ym, ys))
         if (runif(1) > (scoreParams(c(ym, ys)) / scoreParams(chain[t-1, ]))) {
             chain[t, ] <- c(ym, ys)
         } else {
@@ -120,7 +120,21 @@ mcmc <- function() {
 }
 
 
+failModel <- function(points) {
+    return(any(apply(points, 1, function(x) {any((x == 0) == FALSE)}) == FALSE))
+}
 
+packDensity <- function() {
+    n <- seq(from=50, to=1000, by=50)
+    res <- rep(0, length(n))
+    names(res) <- as.character(n)
+    for (i in 1:length(n)) {
+        print(n[i])
+        points <- dmin2d(n=n[i], m = 20, s = 0, xlo = 0, xhi = 400, ylo = 0, yhi = 400)
+        res[i] <- failModel(points)
+    }
 
+    return(res)
+}
 
 
